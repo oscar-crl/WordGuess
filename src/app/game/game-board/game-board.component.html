@@ -1,0 +1,6 @@
+<div class="game-board">
+  <app-game-board-row
+    *ngFor="let attempt of attempts"
+    [attempt]="attempt" [word]="word">
+  </app-game-board-row>
+</div>

@@ -1,0 +1,26 @@
+.letter-card {
+  display: inline-flex;
+  color: ghostwhite;
+  font-size: 2rem;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
+  border-radius: 5px;
+  margin: 3px;
+  min-width: 50px;
+  min-height: 50px;
+  text-transform: capitalize;
+}
+
+.absent {
+  background-color: dimgray;
+}
+
+.present {
+  background-color: #b59f3b;
+}
+
+.valid {
+  background-color: #538d4e;
+}
