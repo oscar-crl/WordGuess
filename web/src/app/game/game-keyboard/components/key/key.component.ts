@@ -25,8 +25,9 @@ export class KeyComponent implements OnInit {
   }
 
   handleLetter = (letter: LetterObject) => {
-    if (letter.letter === this.key)
-      this.letter = letter;
+    if (letter.letter !== this.key)
+      return;
+    this.letter = letter;
   }
 
 }

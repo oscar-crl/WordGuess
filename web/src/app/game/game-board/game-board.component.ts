@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {KeyService} from "../game-keyboard/components/key/key.service";
 import {AttemptsObject} from "./attempts-object";
+import {Key} from "../game-keyboard/components/key/key";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-game-board',
@@ -8,11 +10,22 @@ import {AttemptsObject} from "./attempts-object";
   styleUrls: ['./game-board.component.scss']
 })
 export class GameBoardComponent implements OnInit {
-  word = 'elder'
+
+  word = ''
   attempts: AttemptsObject[] = []
 
-  constructor(private data: KeyService) {
+  constructor(private data: KeyService, private http: HttpClient) {
+
     this.data.currentMessage.subscribe(key => this.writeLetter(key));
+
+  }
+
+  async requestAction(): Promise<void> {
+    this.http.get<any>("http://localhost:8000/requestAction").subscribe(data => {
+      this.writeLetter(data.letter);
+      console.log("letter:", data.letter);
+      this.requestAction();
+    });
   }
 
   ngOnInit(): void {
@@ -22,7 +35,6 @@ export class GameBoardComponent implements OnInit {
   }
 
   findAttempt = () => {
-    console.log(this.attempts)
     for (let i = 0; i < this.attempts.length; i++) {
       if (!this.attempts[i].confirmed)
         return i;
@@ -37,6 +49,18 @@ export class GameBoardComponent implements OnInit {
     const attemptIndex = this.findAttempt();
     let attemptObject = this.attempts[attemptIndex];
 
+    if (letter === 'RESTART') {
+      this.attempts = []
+      for (let i = this.attempts.length; i < 6; i++) {
+        this.attempts = [...this.attempts, {content: "", confirmed: false}];
+      }
+      return;
+    }
+    if (letter === 'RESET') {
+      attemptObject.content = "";
+      this.attempts[attemptIndex] = {...attemptObject, content: attemptObject.content};
+      return;
+    }
     if (letter === 'DEL') {
       attemptObject.content = attemptObject.content.slice(0, -1);
       this.attempts[attemptIndex] = {...attemptObject, content: attemptObject.content};

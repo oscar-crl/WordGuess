@@ -13,6 +13,7 @@ import { LetterCardComponent } from './game/components/letter-card/letter-card.c
 import {MatGridListModule} from "@angular/material/grid-list";
 import { GameBoardRowComponent } from './game/game-board/game-board-row/game-board-row.component';
 import { KeyComponent } from './game/game-keyboard/components/key/key.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { KeyComponent } from './game/game-keyboard/components/key/key.component'
     AppRoutingModule,
     BrowserAnimationsModule,
     MatToolbarModule,
-    MatGridListModule
+    MatGridListModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

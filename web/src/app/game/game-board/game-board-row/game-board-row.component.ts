@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {LetterObject} from "../../components/letter-object";
 import {AttemptsObject} from "../attempts-object";
 import {LetterService} from "../../components/letter.service";
+import {Key} from "../../game-keyboard/components/key/key";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-game-board-row',
@@ -15,7 +17,6 @@ export class GameBoardRowComponent implements OnInit {
   letterObject: LetterObject[] = [];
 
   letterState = () => {
-    console.log(this.attempt)
     let res: LetterObject[] = [];
     for (let i = 0; i < this.attempt.content.length; i++) {
       if (this.attempt.content[i] === this.word[i])
@@ -28,11 +29,12 @@ export class GameBoardRowComponent implements OnInit {
     for (let i = this.attempt.content.length; i < 5; i++) {
       res.push({letter: '', state: 'empty', confirmed: false});
     }
-    res.forEach(x => this.dataLetter.sendLetter(x));
+    if (this.attempt.confirmed)
+      res.forEach(x => this.dataLetter.sendLetter(x));
     return res;
   }
 
-  constructor(private dataLetter: LetterService) {}
+  constructor(private dataLetter: LetterService, private http: HttpClient) {}
 
   ngOnInit(): void {
     this.letterObject = this.letterState();

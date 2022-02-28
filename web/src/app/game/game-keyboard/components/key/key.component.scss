@@ -14,3 +14,15 @@
   cursor: pointer;
   user-select: none;
 }
+
+.absent {
+  background-color: dimgray;
+}
+
+.present {
+  background-color: #b59f3b;
+}
+
+.valid {
+  background-color: #538d4e;
+}
